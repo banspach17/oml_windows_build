@@ -1,0 +1,111 @@
+version: 1.0.{build}
+configuration: Release
+platform: x64
+clone_folder: c:\oss
+init:
+- cmd: >-
+    rem git config --global core.autolf true
+    
+    git config --global core.autocrlf true
+    
+    git config --list
+    
+    if exist .gitattributes type .gitattributes
+    
+    if exist .gitignore type .gitignore
+    
+    SET 
+    
+    rem Python settings reviewrem
+    
+    rem SET PATH=\python36;%PYTHON%;%path%
+    
+    rem python -V
+    
+    rem where python
+    
+    rem which python
+    
+    rem python -v -m pip install numpy
+    
+    rem python -m pip install numpy
+    
+    
+
+environment:
+  OML_ROOT: c:\oss\OpenMatrixPublic
+  OML_THIRDPARTY: c:\oss\third_party
+  OML_APPVEYOR: TRUE
+  OML_PYTHON: c:\python36-x64
+  
+
+before_build:
+- cmd: >-
+    
+    rem curl --help
+    
+    rem curl -v -u 'openmatrixthirdparty:EfWb[RMP2GuRs^LHfna4' --disable-eprt --disable-epsv -O "ftp://ftp2.altair.com/%2foutgoing/smallfile.tar.gz"
+    
+    rem curl -v -O http://www.netlib.org/lapack/lapack-3.7.1.tgz
+    
+    dir
+    
+    git clone --depth=50 --branch=master https://github.com/OpenMatrixLanguage/OpenMatrix.git c:\oss\OpenMatrixPublic
+    
+    git clone --depth=50 --branch=master https://github.com/OpenMatrixLanguage/Continuous_Integration_Windows.git c:\oss\third_party
+    
+    dir c:\oss
+    
+    dir %OML_ROOT%
+    
+    dir c:\oss\third_party
+    
+    set OML
+    
+    copy /Y PropertySheet.props %OML_ROOT%\VS2015\OpenMatrix
+    
+    copy /Y OpenMatrix.sln %OML_ROOT%\VS2015\OpenMatrix
+    
+    copy /Y evaluate_test_results.bat %OML_ROOT%\Tests
+    
+    rem copy /Y regressOMLConsole.pl %OML_ROOT%\Tests
+    
+    rem dir /s \python36-x64 > python.dir.txt
+    
+    rem findstr /i /g:python.filter.txt python.dir.txt
+    
+    rem findstr /i numpy python.dir.txt
+    
+
+build:
+  project: c:\oss\OpenMatrixPublic\VS2015\OpenMatrix\OpenMatrix.sln
+  verbosity: minimal
+  
+
+test_script:
+- cmd: >-
+    rem c:\oss\OpenMatrixPublic\scripts\appveyor_test.bat 
+    
+    c:\oss\third_party\appveyor_test.bat appveyor_setup where 
+    
+    rem appveyor_setup mingw where dir_x64_Release check_x64_Release core_test_perl end
+    
+    rem appveyor_test.bat script supports following test related options:
+    
+    rem appveyor_setup mingw where core_test_perl core_test_python end
+    
+    rem dir_x64_Release check_x64_Release
+    
+    cd %OML_ROOT%\Tests
+    
+    rem set path
+    
+    dir
+    
+    run_toolbox_tests.bat
+    
+    cd %OML_ROOT%\Tests
+    
+    evaluate_test_results.bat
+    
+
