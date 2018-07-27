@@ -35,6 +35,12 @@ init:
 environment:
   OML_ROOT: c:\oss\OpenMatrixPublic
   OML_THIRDPARTY: c:\oss\third_party\third_party
+  PATH=C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin;%PATH%
+  PATH=%OML_ROOT%\VS2015\OpenMatrix\x64\Release;%PATH%
+  PATH=%OML_THIRDPARTY%\lapack\lapack-3.7.1-build\bin;%PATH%
+  PATH=%OML_THIRDPARTY%\fftw\fftw-3.2.2\fftw-3.2.2-libs\x64\Release;%PATH%
+  PATH=%OML_THIRDPARTY%\matio\matio-1.5.11\visual_studio\x64\Release;%PATH%
+  PATH=%OML_THIRDPARTY%\sundials\sundials-3.1.0-install\lib;%PATH%
   OML_APPVEYOR: TRUE
   OML_PYTHON: c:\python36-x64
   
@@ -88,7 +94,7 @@ test_script:
 - cmd: >-
     rem c:\oss\OpenMatrixPublic\scripts\appveyor_test.bat 
     
-    %OML_ROOT%\scripts\appveyor_test.bat appveyor_setup where 
+    rem %OML_ROOT%\scripts\appveyor_test.bat appveyor_setup where 
     
     rem appveyor_setup mingw where dir_x64_Release check_x64_Release core_test_perl end
     
@@ -100,9 +106,11 @@ test_script:
     
     cd %OML_ROOT%\Tests
     
-    rem set path
-    
     dir
+    
+    perl %OML_ROOT%\Tests\regressOMLConsole.pl
+    
+    cd %OML_ROOT%\Tests
     
     run_toolbox_tests.bat
     
