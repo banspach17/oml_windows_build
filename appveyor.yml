@@ -68,6 +68,8 @@ before_build:
     
     copy /Y evaluate_test_results.bat %OML_ROOT%\Tests
     
+    copy /Y appveyor_test.bat %OML_ROOT%\scripts
+    
     rem copy /Y regressOMLConsole.pl %OML_ROOT%\Tests
     
     rem dir /s \python36-x64 > python.dir.txt
@@ -86,7 +88,7 @@ test_script:
 - cmd: >-
     rem c:\oss\OpenMatrixPublic\scripts\appveyor_test.bat 
     
-    c:\oss\third_party\appveyor_test.bat appveyor_setup where 
+    %OML_ROOT%\scripts\appveyor_test.bat appveyor_setup where 
     
     rem appveyor_setup mingw where dir_x64_Release check_x64_Release core_test_perl end
     
