@@ -14,7 +14,7 @@ call :eval_toolbox_test omlMathUtils
 call :eval_toolbox_test omlMatio
 call :eval_toolbox_test omlOptimization
 call :eval_toolbox_test omlPolynom
-call :eval_toolbox_test omlpythonbridge
+rem call :eval_toolbox_test omlpythonbridge
 call :eval_toolbox_test omlSignals
 call :eval_toolbox_test omlStatistics
 
